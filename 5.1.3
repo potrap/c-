@@ -1,0 +1,70 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+/*
+   Obtaining derived data from an object
+*/
+
+class AdHocSquare{
+public:
+
+	AdHocSquare(double newSide) {
+	   side = newSide;
+	}
+
+	void setSide(double newValueSide) {
+		if (newValueSide > 0) {
+			side = newValueSide;
+		}else {
+			cout << "Error, incorrect data 0!\n";
+		}
+	}
+
+	double get_area() {
+		return side * side;
+	}
+
+private:
+	double side;
+};
+
+class LazySquare{
+public:
+
+	LazySquare(double newSide) {
+		side = newSide;
+		area = area;
+	}
+
+	void set_side(double newValueSide) {
+		if (newValueSide > 0) {
+			side = newValueSide;
+			side_changed = true;
+		}
+		else {
+			cout << "Error, incorrect data 0!\n";
+		}
+	}
+
+	double get_area() {
+		if (side_changed) {
+			area = side * side;
+			return area;
+			side_changed = false;
+		} else {
+			return area;
+		}
+	
+	}
+
+private:
+	double side;
+	double area;
+	bool side_changed;
+};
+
+int main(){
+	
+}
