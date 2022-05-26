@@ -1,0 +1,21 @@
+#include <iostream>
+using namespace std;
+
+int main(void) {
+	double a = 8, b = 0, c = 0;
+	cout << "write b: ";
+	cin >> b;
+	try {	
+		if (b == 0) {
+			throw b;
+		}
+		cout << "result is: ";
+		c = a / b;
+	}
+	catch (const int exception) {
+		cout << "b can't be 0";
+	}
+	
+	cout << c << endl;
+	return 0;
+}
