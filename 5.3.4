@@ -1,0 +1,187 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+/*
+    Управление членами фитнес клуба
+*/
+
+class Work {
+public:
+
+	bool equal(string st1, string st2) {
+		if (st1.size() != st2.size()) {
+			return false;
+		} else {
+			for (int i = 0; i < st1.size(); i++) {
+				if (st1[i] != st2[i]) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	void split(string str, string *arr) {
+		string help;
+		int check = 0;
+		for (int i = 0; i < str.size(); i++) {
+			if (str[i] != ' ') {
+				help += str[i];
+			} else {
+				arr[check] = help;
+				help = "";
+				check++;
+			}
+		}
+	}
+};
+
+class Member {
+
+private:
+	string name;
+	string id;
+	int numMonths;
+public:
+
+	Member(string name, string id, int numMonths) {
+		this->name = name;
+		this->id = id;
+		this->numMonths = numMonths;
+	}
+
+	void setName(string name) {
+		this->name = name;
+	}
+	string getName() {
+		return name;
+	}
+	void setId(string id) {
+		this->id = id;
+	}
+	string getId() {
+		return id;
+	}
+	void setNumMonths(int numMonths) {
+		this->numMonths = numMonths;
+	}
+	int getNumMonths() {
+		return numMonths;
+	}
+	void print() {
+		cout << name << " " << id << " " << numMonths;
+	}
+
+};
+
+class Group {
+
+private:
+	vector<Member> group;
+	Work work = Work();
+public:
+	Group() {
+	}
+
+	Member getGroup() {
+		return group[1];
+	}
+
+	void create(string name, string id) {
+		bool check = true;
+		for (int i = 0; i < group.size(); i++) {
+			if (work.equal(id, group[i].getId())) {
+				cout << "This ID is already taken.Choose another." << endl;
+				check = false;
+				break;
+			}
+		}
+		if (check) {
+		if (group.size() != 10) {
+			group.push_back(Member(name, id, 0));
+			cout << "Member " << id << " successfully created" << endl;
+		} else {
+			cout << "This group is already full.We bring our apologies" << endl;
+		}
+	}
+	}
+
+	void deleteMember(string id) {
+		auto iter = group.cbegin();
+		for (int i = 0; i < group.size();i++) {
+			if (work.equal(group[i].getId(), id)) {
+				group.erase(iter + i);
+				cout << "Member " << id << " successfully delete" << endl;
+			} else {
+				cout << "Member " << id << " not found" << endl;
+			}
+		}
+	}
+
+	void extend(string id, int num) {
+		for (int i = 0; i < group.size(); i++) {
+			if (work.equal(group[i].getId(), id)) {
+				group[i].setNumMonths(group[i].getNumMonths() + num);
+				cout << "Member " << id << " now the number of months is " << group[i].getNumMonths() << endl;
+			}
+		}
+	}
+
+	void cancel(string id) {
+		for (int i = 0; i < group.size(); i++) {
+			if (work.equal(group[i].getId(), id)) {
+				group[i].setNumMonths(0);
+				cout << "Member " << id << " now the number of months is 0" << endl;
+			}
+		}
+	}
+
+	void print() {
+		for (int i = 0; i < group.size(); i++) {
+			cout << group[i].getName() << endl;
+		}
+	}
+	};
+
+int main(void) {
+	Group group1 = Group();
+	string check1;
+	Work work = Work();
+    string arr[5];
+
+	while(true) {
+		cin >> check1;
+		
+		string arr[5];
+		int kol = 0;
+		for (int i = 0; i < check1.size(); i++) {
+			if (check1[i] != ' ') {
+				arr[kol] += check1[i];
+			}else{
+				kol++;
+			}
+		}
+
+			if (arr[0] == "quit") {
+				cout << "Shutdown";
+				break;
+        
+			} else if (arr[0] == "cancel") {
+				group1.cancel(arr[1]);
+			} else if (arr[0] == "create") {
+				group1.create(arr[1],arr[2]);
+			} else if (arr[0] == "delete") {
+				group1.deleteMember(arr[1]);
+			} else if (arr[0] == "extend") {
+				static int num;
+				for (int i = 0; i < arr[2].size(); i++) {
+					int k = (int)arr[2][i] - (int)'0';
+					num = num * 10 + k;
+				}
+				group1.extend(arr[1],num);
+			} else {
+				cout << "Error try again";
+			}
+	}
+}
