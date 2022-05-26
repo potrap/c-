@@ -1,0 +1,121 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+/*
+   Кількість потрібної води для тварин
+*/
+
+class FarmAnimal {
+
+public:
+	FarmAnimal(double weight, double water_consumption);
+	double getWaterConsumption();
+	double getWeight();
+	double getAllNeedWater();
+
+
+private:	
+	double water_consumption;
+	double weight;
+};
+
+FarmAnimal::FarmAnimal(double weight, double water_consumption) {
+	this->weight = weight;
+	this->water_consumption = water_consumption;
+}
+
+double FarmAnimal::getWaterConsumption() {
+	return water_consumption;
+}
+
+double FarmAnimal::getWeight() {
+	return weight;
+}
+
+class Cow : public FarmAnimal {
+public:
+	Cow(double weight, double water_consumption) : FarmAnimal(weight, water_consumption) {};
+
+private:
+	 
+};
+
+class Sheep : public FarmAnimal {
+public:
+	Sheep(double weight, double water_consumption) : FarmAnimal(weight, water_consumption) {};
+	
+private:
+	
+};
+
+class Horse : public FarmAnimal {
+public:
+	Horse(double weight, double water_consumption) : FarmAnimal(weight, water_consumption) {};
+
+private:
+	
+};
+
+class ConsumptionAccumulator
+{
+
+public:
+	ConsumptionAccumulator();
+	double getTotalConsumption();
+	void addConsumption(FarmAnimal animal);
+
+private:
+	double total_consumption;
+};
+ConsumptionAccumulator::ConsumptionAccumulator() :
+	total_consumption(0)
+{
+
+}
+double ConsumptionAccumulator::getTotalConsumption(){
+	return total_consumption;
+}
+void ConsumptionAccumulator::addConsumption(FarmAnimal animal)
+{
+	total_consumption += (animal.getWeight() * animal.getWaterConsumption());
+}
+
+int main()
+{
+	double waterCow = 0.086, waterSheep = 0.11, waterHorse = 0.068;
+	ConsumptionAccumulator accumulator;
+
+	cout << "Enter [animal] [weight]" << endl;
+	for(int i = 0;;i++){
+		string text;
+		cout << "input animal name: \n";
+		cin >> text;
+		double num;
+		if ((text != "cow") && (text != "sheep") && (text != "horse")) {
+			cout << "Result - ";
+			break;
+		}
+		cout << "input his weight: \n";
+		cin >> num;
+	
+		if(text=="cow"){
+		    Cow ff1(num,waterCow);
+		    accumulator.addConsumption(ff1);
+		}
+		if(text=="sheep"){
+			Sheep ff2(80,waterSheep);
+			accumulator.addConsumption(ff2);
+		}
+    
+		if(text=="horse"){
+			Horse ff3(400,waterHorse);
+			accumulator.addConsumption(ff3);
+		}
+	}
+
+	cout << accumulator.getTotalConsumption();
+	
+	return 0;
+}
