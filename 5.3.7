@@ -1,0 +1,187 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+/*
+   Превращение дроби в string и double + Сравние
+*/
+
+class Fraction {
+
+public:
+	Fraction(int numerator, int denominator) {
+		this->numerator = numerator;
+		this->denominator = denominator;
+	};
+
+	string toString() {
+		
+		string result = "";
+		int numerator1 = numerator;
+		int denominator1 = denominator;
+
+		if (numerator1 < 0 && denominator1 < 0) {
+			numerator1 = numerator1 * (-1);
+			denominator1 = denominator1 * (-1);
+		}
+
+		if (numerator1 == 0) {
+			return "0";
+		}
+	
+		if ((numerator1 * denominator1) < 0) {
+			result = "-";
+			if (numerator1 < 0) {
+				numerator1 = numerator1 * (-1);
+			}
+			if (denominator1 < 0) {
+				denominator1 = denominator1 * (-1);
+			}
+		}
+		int full = numerator1 / denominator1;
+		numerator1 = numerator1 - denominator1 * (numerator1 / denominator1);
+
+		/*for (int i = 2; i <= 9; i++) {
+			if (numerator1 % i == 0 && denominator1 % i == 0) {
+				numerator1 = numerator1 / i;
+				denominator1 = denominator1 / i;
+				i--;
+			}
+		}
+		if (denominator1 % numerator1 == 0) {
+			numerator1 = 1;
+			denominator1 = denominator1 / numerator1;
+		}*/
+
+		if (full > 0) {	
+			result = result + to_string(full);
+			result = result + ' ' + to_string(numerator1) + '/' + to_string(denominator1);
+		} else {
+			result = result + to_string(numerator1) + '/' + to_string(denominator1);
+		}
+		return result;
+	};
+
+	double toDouble() {
+		double numerator1 = numerator;
+		double denominator1 = denominator;
+
+		if (numerator1 == 0) {
+			return 0;
+		}
+		return (numerator1 / denominator1);
+	};
+
+	Fraction plus(Fraction that) {
+		int num = (this->numerator * that.denominator) + (that.numerator * this->denominator);
+		int den = this->denominator * that.denominator;
+		Fraction result(num, den);
+		return result;
+	};
+
+	Fraction minus(Fraction that) {
+		int num = (this->numerator * that.denominator) - (that.numerator * this->denominator);
+		int den = this->denominator * that.denominator;
+		Fraction result(num, den);
+		return result;
+	};
+
+	Fraction times(Fraction that) {
+		int num = this->numerator * that.numerator;
+		int den = this->denominator * that.denominator;
+		Fraction result(num, den);
+		return result;
+	};
+
+	Fraction by(Fraction that) {
+		int num = this->numerator * that.denominator;
+		int den = this->denominator * that.numerator;
+		Fraction result(num, den);
+		return result;
+	};
+
+	bool isGreaterThan(Fraction that) {
+		if (this->toDouble() > that.toDouble()) {
+			return true;
+		}
+		return false;
+	};
+
+	bool isLessThan(Fraction that) {
+		if (this->toDouble() < that.toDouble()) {
+			return true;
+		}
+		return false;
+	};
+
+	bool isEqual(Fraction that) {
+		if (this->toDouble() == that.toDouble()) {
+			return true;
+		}
+		return false;
+	};
+
+private:
+	int numerator;
+	int denominator;
+};
+
+Fraction createFraction(string input) {
+	bool check = true;
+	string res = "";
+	int num = 0, den = 0;
+	for (int i = 0; i <= input.length(); i++) {
+		if (check) {
+			if (input[i] != '/') {
+				res = res + input[i];
+			}
+			else {
+				num = stoi(res);
+				res = "";
+				check = false;
+			}
+		}
+		else {
+			if (i != input.length()) {
+				res = res + input[i];
+			}
+			else {
+				den = stoi(res);
+			}
+		}
+	}
+	Fraction frac(num, den);
+	if (den == 0) {
+		cout << "Denominator can't be 0. Try again:)" << endl;
+		return frac;
+	}
+	return frac;
+}
+
+
+
+int main(void) {
+
+	string input1 = "";
+	cin >> input1;
+	Fraction first = createFraction(input1);
+	
+	string input2 = "";
+	cin >> input2;
+	Fraction second = createFraction(input2);
+
+	if (first.isGreaterThan(second)) {
+		cout << first.toString() << " > " << second.toString();
+	}
+
+	if (first.isLessThan(second)) {
+		cout << first.toString() << " < " << second.toString();
+	}
+
+	if (first.isEqual(second)) {
+		cout << first.toString() << " = " << second.toString();
+	}
+
+	return 0;
+}
