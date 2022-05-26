@@ -1,0 +1,108 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+/*
+   Превращение дроби в string и double
+*/
+
+class Fraction {
+
+public:
+	Fraction(int numerator, int denominator) {
+		this->numerator = numerator;
+		this->denominator = denominator;
+	};
+
+	string toString() {
+		
+		string result = "";
+		int numerator1 = numerator;
+		int denominator1 = denominator;
+
+		if (numerator1 < 0 && denominator1 < 0) {
+			numerator1 = numerator1 * (-1);
+			denominator1 = denominator1 * (-1);
+		}
+
+		if (numerator1 == 0) {
+			return "0";
+		}
+	
+		if ((numerator1 * denominator1) < 0) {
+			result = "-";
+			if (numerator1 < 0) {
+				numerator1 = numerator1 * (-1);
+			}
+			if (denominator1 < 0) {
+				denominator1 = denominator1 * (-1);
+			}
+		}
+		
+		if ((numerator1 / denominator1) > 0) {	
+			result = result + to_string(numerator1 / denominator1);
+			result = result + ' ' + to_string(numerator1 - denominator1 * (numerator1 / denominator1)) + '/' + to_string(denominator1);
+		} else {
+			result = result + to_string(numerator1) + '/' + to_string(denominator1);
+		}
+		return result;
+	};
+
+	double toDouble() {
+		double numerator1 = numerator;
+		double denominator1 = denominator;
+
+		if (numerator1 == 0) {
+			return 0;
+		}
+		return (numerator1 / denominator1);
+	};
+
+private:
+	int numerator;
+	int denominator;
+};
+
+// implement Fraction methods
+
+int main(void) {
+
+	int num=0, den=0;
+	string input = "";
+
+	cin >> input;
+
+	bool check = true;
+	string res = "";
+	
+		for (int i = 0; i <= input.length(); i++) {
+			if (check) {
+				if (input[i] != '/') {
+					res = res + input[i];
+				}
+				else {
+					num = stoi(res);
+					res = "";
+					check = false;
+				}
+			}
+			else {
+				if (i != input.length()) {
+					res = res + input[i];
+				}
+				else {
+					den = stoi(res);
+				}
+			}
+		}
+		if (den == 0) {
+			cout << "Denominator can't be 0. Try again:)" << endl;
+			return 0;
+		}
+	
+	
+	Fraction fraction(num, den);
+	cout << fraction.toString() << " is " << fraction.toDouble() << " in decimal" << endl;
+	return 0;
+}
