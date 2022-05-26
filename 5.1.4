@@ -1,0 +1,59 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+/*
+   Classes and objects: ShopItemOrder
+*/
+
+class ShopItemOrder{
+private: 
+	string name;
+	double price;
+	int numOfOrder;
+public:
+	
+	ShopItemOrder(string name, double price, int numOfOrder) {
+		this->name = name;
+		this->price = price;
+		this->numOfOrder = numOfOrder;
+	}
+
+	string getName() {
+		return name;
+	}
+	double getPrice() {
+		return price;
+	}
+	int getNumOfOrder() {
+		return numOfOrder;
+	}
+	void setName(string name) {
+		this->name = name;
+	}
+	void setPrice(double price) {
+		this->price = price;
+	}
+	void setNumOfOrder(int numOfOrder) {
+		this->numOfOrder = numOfOrder;
+	}
+
+	double getTotalPrice() {
+		return (price * numOfOrder);
+	}
+
+	void print() {
+		cout << "Name: " << name << "\n";
+		cout << "Price: " << price << "\n";
+		cout << "Items ordered: " << numOfOrder << "\n";
+		cout << "To pay: " << getTotalPrice() << "\n";
+	}
+
+
+};
+
+int main(){
+	ShopItemOrder itOne("Phone", 500.54, 5);
+	itOne.print();
+}
