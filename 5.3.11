@@ -1,8 +1,5 @@
 #include <iostream>
 
-/*
-  Cтворити дочірні класи
-*/
 using namespace std;
 
 class FarmAnimal {
