@@ -1,0 +1,35 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+class Person
+{
+public:
+	string name;
+	int age;
+	string race;
+};
+
+void print(Person* person){
+	cout << person->name << " is " << person->age << " years old. And he is " << person->race << endl;
+}
+
+int main()
+{
+	Person person;
+	person.name = "Barry";
+	person.age = 22;
+	person.race = "White";
+	cout << "Meet " << person.name <<"\n";
+	print(&person);
+
+	Person Antoni;
+	Antoni.name = "Antoni";
+	Antoni.age = 19;
+	Antoni.race = "Black";
+	cout << "Meet " << Antoni.name << "\n";
+	print(&Antoni);
+
+	return 0;
+}
