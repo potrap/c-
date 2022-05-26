@@ -1,0 +1,98 @@
+#include <iostream>
+#include <string>
+#include<cmath>
+
+using namespace std;
+
+class Point2D {
+
+public:
+	Point2D(double x, double y) {
+		this->x = x;
+		this->y = y;
+	}
+
+	double distanceTo(Point2D that) {
+		double distance = sqrt(pow((this->x - that.x), 2) + pow((this->y - that.y),2));
+		return distance;
+	};
+
+	double getX() {
+		return x;
+	}
+
+	double getY() {
+		return y;
+	}
+
+private:
+	double x;
+	double y;
+};
+
+class Line2D {
+
+public:
+
+	Line2D(double slope, double y_intercept);
+
+	Line2D(Point2D pointA, Point2D pointB) {
+		double xA = pointA.getX(), yA = pointA.getY();
+		double xB = pointB.getX(), yB = pointB.getY();
+
+		slope = (yB - yA) / (xB - xA);
+		y_intercept = ((yB - yA) * xA) - ((xB - xA) * yA);
+	};
+
+	string toString() {
+		string result = "y = " + to_string(slope) + "x " + (y_intercept >= 0 ? "+ " : "") + to_string(y_intercept);
+		return result;
+	};
+	
+
+private:
+	double slope;
+	double y_intercept;
+};
+
+Point2D createPoint(string line) {
+	string res = "";
+	bool check = true;
+	double x = 0, y = 0;
+	for (int i = 0; i <= line.length(); i++) {
+		if (check) {
+			if (line[i] != ',') {
+				res = res + line[i];
+			} else {
+				x = stoi(res);
+				res = "";
+				check = false;
+			}
+		} else {
+			if (i != line.length()) {
+				res = res + line[i];
+			}
+			else {
+				y = stoi(res);
+			}
+		}
+		
+	}
+	Point2D result(x, y);
+	return result;
+}
+
+int main(void) {
+
+	string line1 = "";
+	cin >> line1;
+	Point2D first = createPoint(line1);
+
+	string line2 = "";
+	cin >> line2;
+	Point2D second = createPoint(line2);
+
+	Line2D line(first, second);
+	cout << line.toString();
+	
+}
