@@ -1,0 +1,45 @@
+#include <iostream>
+using namespace std;
+#include <string>;
+
+class Tree {
+public:
+	virtual void draw() {  }
+};
+class StrangeTree : public Tree {
+
+public:
+	void draw() {
+		cout << " /\\ " << endl;
+		cout << "//\\" << "\\" << endl;
+	}
+	};
+	class NormalTree : public Tree {
+
+	public:
+		void draw() {
+			cout << " /\\ " << endl;
+			cout << "/**\\ " << endl;
+		}
+	};
+	class UglyTree : public Tree {
+
+	public:
+		void draw() {
+			cout << " /\\ " << endl;
+			cout << "/++\\ " << endl;
+		}
+	};
+
+	int main()
+	{
+		StrangeTree st;
+		NormalTree nt;
+		UglyTree ut;
+		cout << "Drawing 1:\n";
+		st.draw();
+		cout << "Drawing 2:\n";
+		nt.draw();
+		cout << "Drawing 3:\n";
+		ut.draw();
+	}
