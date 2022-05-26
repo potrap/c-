@@ -1,0 +1,101 @@
+#include <iostream>
+
+using namespace std;
+
+/*
+  Flight booking system: part 2 (Reserved seats)
+*/
+
+class FlightBooking {
+public:
+	
+	FlightBooking(int id, int capacity, int reserved)
+	{
+		this->id = id;
+		this->capacity = capacity;
+		this->reserved = reserved;
+	}
+
+	void printStatus() {
+		double percent = 100.0 * ((double)this->reserved / this->capacity);
+		cout << "Flight " << id << " status: " << reserved << " / " << capacity << " = " << percent << "% seats reserved\n";
+	}
+
+	int getReserved() {
+		return reserved;
+	}
+	void setReserved(int reserved) {
+		this->reserved = reserved;
+	}
+
+	void reserveSeats(int number_ob_seats) {
+		double percent = 100.0 * (((double)getReserved() + number_ob_seats) / this->capacity);
+		if (percent >= 105) {
+			cout << "Cannot perform this operation. Needed seats are reserved.\n";
+		} else {
+			this->reserved += number_ob_seats;
+			cout << "Seats have been successfully reserved\n";
+		}
+	}
+
+	void canceReservations(int number_ob_seats) {
+		if (reserved != 0) {
+			this->reserved -= number_ob_seats;
+			cout << "The operation was successful.\n";
+		}else {
+			cout << "No reserved seats.\n";
+		}
+	}
+
+private:
+	int id;
+	int capacity;
+	int reserved;
+};
+
+
+int main() {
+
+	FlightBooking booking(2154, 200, 50);
+	int check = -1;
+	bool g = true;
+	while (g) {
+
+		cout << "\nThe main menu welcomes you.\n";
+		cout << " 1. Check status\n 2. Reserve seats\n 3. Cancel reserve seats\n 4. Exit\n Enter your choise: ";
+		cin >> check;
+		switch (check)
+		{
+		case 1: 
+			booking.printStatus();
+			cout << "\n";
+			system("pause");
+			break;
+		case 2:
+			int number_ob_seat;
+			cout << "\nEnter number of seats: ";
+			cin >> number_ob_seat;
+			booking.reserveSeats(number_ob_seat);
+			booking.printStatus();
+			cout << "\n";
+			system("pause");
+			break;
+		case 3:
+			int number_ob_seat1;
+			cout << "\nEnter number of seats: ";
+			cin >> number_ob_seat1;
+			booking.canceReservations(number_ob_seat1);
+			booking.printStatus();
+			cout << "\n";
+			system("pause");
+			break;
+		case 4:
+			g = false;
+			break;
+		default:
+			break;
+		}
+	}
+	
+	return 0;
+}
