@@ -1,0 +1,43 @@
+#include <iostream>
+
+using namespace std;
+
+/*
+  Flight booking system: part 1
+*/
+
+class FlightBooking {
+public:
+	
+	FlightBooking(int id, int capacity, int reserved)
+	{
+		this->id = id;
+		this->capacity = capacity;
+		this->reserved = reserved;
+	}
+
+	void printStatus() {
+		double percent = 100.0 * ((double)this->reserved / this->capacity);
+		cout << "Flight " << id << " status: " << reserved << " / " << capacity << " = " << percent << "% seats reserved\n";
+	}
+
+private:
+	int id;
+	int capacity;
+	int reserved;
+};
+
+
+int main() {
+	int reserved = 0,capacity = 0;
+
+	cout << "Provide flight capacity: ";
+	cin >> capacity;
+	cout << "Provide number of reserved seats: ";
+	cin >> reserved;
+
+	FlightBooking booking(2154, capacity, reserved);
+
+	booking.printStatus();
+	return 0;
+}
