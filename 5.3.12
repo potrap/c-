@@ -3,10 +3,6 @@
 
 using namespace std;
 
-/*
-   Кількість потрібної води для тварин
-*/
-
 class FarmAnimal {
 
 public:
